@@ -1,6 +1,6 @@
 package com.khun.movievault.service.impl;
 
-import com.khun.movievault.data.Profile;
+import com.khun.movievault.model.Profile;
 import com.khun.movievault.repository.ProfileRepository;
 import com.khun.movievault.service.ProfileService;
 import org.springframework.beans.factory.annotation.Autowired;

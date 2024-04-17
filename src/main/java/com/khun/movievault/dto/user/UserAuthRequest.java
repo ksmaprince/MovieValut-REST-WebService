@@ -1,6 +1,6 @@
 package com.khun.movievault.dto.user;
 
-public record LoginRequest(
+public record UserAuthRequest(
         String email,
         String password
 ) {

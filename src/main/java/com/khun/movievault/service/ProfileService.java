@@ -1,6 +1,6 @@
 package com.khun.movievault.service;
 
-import com.khun.movievault.data.Profile;
+import com.khun.movievault.model.Profile;
 import org.springframework.stereotype.Service;
 
 @Service

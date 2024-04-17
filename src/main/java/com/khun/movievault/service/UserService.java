@@ -1,12 +1,10 @@
 package com.khun.movievault.service;
 
-import com.khun.movievault.data.User;
 import com.khun.movievault.dto.user.UserProfileResponse;
 import com.khun.movievault.dto.user.UserRequest;
-import com.khun.movievault.dto.user.UserResponse;
-import com.khun.movievault.exception.UserDuplicateException;
-import com.khun.movievault.exception.UserInvalidCredentialException;
+import com.khun.movievault.exception.UserAlreadyExistException;
 import com.khun.movievault.exception.UserNotFoundException;
+import com.khun.movievault.model.User;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,9 +14,9 @@ public interface UserService {
 
     List<User> getAllUsers();
 
-    UserResponse loginByUserNameAndPassword(String email, String password) throws UserNotFoundException, UserInvalidCredentialException;
+    User getUserByEmail(String email) throws UserNotFoundException;
 
-    UserProfileResponse saveUser(UserRequest userRequest) throws UserDuplicateException;
+    UserProfileResponse saveUser(UserRequest userRequest) throws UserAlreadyExistException;
 
     UserProfileResponse updatePassword(Long userId, String password);
 

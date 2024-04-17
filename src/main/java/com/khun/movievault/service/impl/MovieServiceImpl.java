@@ -1,6 +1,6 @@
 package com.khun.movievault.service.impl;
 
-import com.khun.movievault.data.Movie;
+import com.khun.movievault.model.Movie;
 import com.khun.movievault.repository.MovieRepository;
 import com.khun.movievault.service.MovieService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +22,7 @@ public class MovieServiceImpl implements MovieService {
     @Override
     public String saveAllMovies(List<Movie> movies) {
         movieRepository.saveAll(movies);
-        return "All data are saved";
+        return "All model are saved";
     }
 
     @Override

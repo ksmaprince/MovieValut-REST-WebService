@@ -1,4 +1,4 @@
-package com.khun.movievault.data;
+package com.khun.movievault.model;
 
 import jakarta.annotation.Nullable;
 import jakarta.persistence.*;

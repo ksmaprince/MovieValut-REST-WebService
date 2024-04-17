@@ -1,7 +1,7 @@
 package com.khun.movievault.advice;
 
 import com.khun.movievault.exception.UserInvalidCredentialException;
-import com.khun.movievault.exception.UserDuplicateException;
+import com.khun.movievault.exception.UserAlreadyExistException;
 import com.khun.movievault.exception.UserNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -14,10 +14,10 @@ import java.util.Map;
 @RestControllerAdvice
 public class MovieVaultExceptionHandler {
     @ResponseStatus(HttpStatus.CONFLICT)
-    @ExceptionHandler(UserDuplicateException.class)
-    public Map<String, String> handleUserDuplicateErrors(UserDuplicateException userDuplicateException){
+    @ExceptionHandler(UserAlreadyExistException.class)
+    public Map<String, String> handleUserDuplicateErrors(UserAlreadyExistException userAlreadyExistException){
         var errorMap = new HashMap<String, String>();
-        errorMap.put("Error Message", userDuplicateException.getMessage());
+        errorMap.put("Error Message", userAlreadyExistException.getMessage());
         return errorMap;
     }
 
