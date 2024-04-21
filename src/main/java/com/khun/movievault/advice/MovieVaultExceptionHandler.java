@@ -2,7 +2,7 @@ package com.khun.movievault.advice;
 
 import com.khun.movievault.exception.UserInvalidCredentialException;
 import com.khun.movievault.exception.UserAlreadyExistException;
-import com.khun.movievault.exception.UserNotFoundException;
+import com.khun.movievault.exception.NotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -22,10 +22,10 @@ public class MovieVaultExceptionHandler {
     }
 
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    @ExceptionHandler(UserNotFoundException.class)
-    public Map<String, String> handleUserNotFoundError(UserNotFoundException userNotFoundException){
+    @ExceptionHandler(NotFoundException.class)
+    public Map<String, String> handleUserNotFoundError(NotFoundException notFoundException){
         var errorMap = new HashMap<String, String>();
-        errorMap.put("Error Message", userNotFoundException.getMessage());
+        errorMap.put("Error Message", notFoundException.getMessage());
         return errorMap;
     }
 

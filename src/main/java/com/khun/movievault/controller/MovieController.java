@@ -3,6 +3,8 @@ package com.khun.movievault.controller;
 import com.khun.movievault.model.Movie;
 import com.khun.movievault.service.MovieService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -28,8 +30,8 @@ public class MovieController {
     }
 
     @GetMapping("/list")
-    public List<Movie> listMovies(){
-        return movieService.getAllMovies();
+    public ResponseEntity<List<Movie>> listMovies(){
+        return new ResponseEntity<>(movieService.getAllMovies(), HttpStatus.OK);
     }
 
 }

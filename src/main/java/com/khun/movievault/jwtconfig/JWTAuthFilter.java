@@ -1,6 +1,7 @@
 package com.khun.movievault.jwtconfig;
 
 import com.khun.movievault.service.impl.AppMovieVaultUserDetailService;
+import io.jsonwebtoken.JwtException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

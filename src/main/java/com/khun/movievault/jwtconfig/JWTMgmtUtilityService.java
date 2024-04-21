@@ -39,8 +39,8 @@ public class JWTMgmtUtilityService {
     private String createToken(Map<String, Object> claims, String subject) {
         var now = Instant.now();
         return Jwts.builder().claims().subject(subject).add(claims)
-//                .issuedAt(new Date(System.currentTimeMillis()))
-//                .expiration(new Date(System.currentTimeMillis()+1000*60*60*10))
+                .issuedAt(new Date(System.currentTimeMillis()))
+                .expiration(new Date(System.currentTimeMillis()+1000*60*60*10))
                 .issuedAt(Date.from(now)).expiration(Date.from(now.plus(24, ChronoUnit.HOURS))).and().signWith(getSignKey()).compact();
     }
 

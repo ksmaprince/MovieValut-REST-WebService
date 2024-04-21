@@ -1,14 +1,17 @@
 package com.khun.movievault.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
+import lombok.Setter;
 import org.antlr.v4.runtime.misc.NotNull;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -20,11 +23,11 @@ public class User implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long userId;
     @Getter
-    @NotNull
-    @Column(unique = true)
+    @Column(unique = true, nullable = false)
+    @Email
     private String email;
     @Getter
-    @NotNull
+    @Column(nullable = false)
     private String password;
 
     private boolean accountNonExpired;
@@ -32,19 +35,23 @@ public class User implements UserDetails {
     private boolean credentialsNonExpired;
     private boolean enabled;
 
-    @Getter
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = "role_id", unique = true, nullable = false)
+    Role role;
+
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "profile_id", unique = true, nullable = false)
     private Profile profile;
 
-    @Getter
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinTable(
-            name = "user_role",
-            joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "userId")},
-            inverseJoinColumns = {@JoinColumn(name = "role_id", referencedColumnName = "roleId")}
-    )
-    private List<Role> roles;
+
+//    @Getter
+//    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+//    @JoinTable(
+//            name = "user_role",
+//            joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "userId")},
+//            inverseJoinColumns = {@JoinColumn(name = "role_id", referencedColumnName = "roleId")}
+//    )
+//    private List<Role> roles;
 
     public User(Long userId, String email, String password, boolean accountNonExpired, boolean accountNonLocked, boolean credentialsNonExpired, boolean enabled, Profile profile) {
         this.userId = userId;
@@ -67,9 +74,11 @@ public class User implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        String[] userRoles = getRoles().stream()
-                .map((role) -> role.getRoleName())
-                .toArray(String[]::new);
+//        String[] userRoles = getRole().stream()
+//                .map((role) -> role.getRoleName())
+//                .toArray(String[]::new);
+
+        String[] userRoles = {getRole().getRoleName()};
         Collection<GrantedAuthority> authorities = AuthorityUtils.createAuthorityList(userRoles);
         return authorities;
     }
@@ -136,7 +145,15 @@ public class User implements UserDetails {
         this.profile = profile;
     }
 
-    public void setRoles(List<Role> roles) {
-        this.roles = roles;
+    public Profile getProfile() {
+        return profile;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
     }
 }

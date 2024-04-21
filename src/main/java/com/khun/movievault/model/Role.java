@@ -5,8 +5,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
-
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -19,7 +17,7 @@ public class Role {
     private Integer roleId;
     private String roleName;
 
-    @ManyToMany(mappedBy = "roles", fetch = FetchType.LAZY)
-    private List<User> users;
+    @OneToOne(mappedBy = "role")
+    private User user;
 
 }
