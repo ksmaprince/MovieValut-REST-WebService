@@ -12,7 +12,7 @@ import java.util.Collection;
 
 @AllArgsConstructor
 @Entity
-@Table(name = "user")
+@Table(name = "res_user")
 public class User implements UserDetails {
     @Getter
     @Id
