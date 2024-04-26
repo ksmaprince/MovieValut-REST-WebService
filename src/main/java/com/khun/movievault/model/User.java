@@ -3,17 +3,12 @@ package com.khun.movievault.model;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.Getter;
-import lombok.Setter;
-import org.antlr.v4.runtime.misc.NotNull;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 
 @AllArgsConstructor
 @Entity
@@ -35,10 +30,12 @@ public class User implements UserDetails {
     private boolean credentialsNonExpired;
     private boolean enabled;
 
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(name = "role_id", unique = true, nullable = false)
+    @Getter
+    @ManyToOne
+    @JoinColumn(name = "role_id", unique = false, nullable = false)
     Role role;
 
+    @Getter
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "profile_id", unique = true, nullable = false)
     private Profile profile;
@@ -78,9 +75,7 @@ public class User implements UserDetails {
 //                .map((role) -> role.getRoleName())
 //                .toArray(String[]::new);
 
-        String[] userRoles = {getRole().getRoleName()};
-        Collection<GrantedAuthority> authorities = AuthorityUtils.createAuthorityList(userRoles);
-        return authorities;
+        return AuthorityUtils.createAuthorityList(new String[]{getRole().getRoleName()});
     }
 
     @Override
@@ -143,14 +138,6 @@ public class User implements UserDetails {
 
     public void setProfile(Profile profile) {
         this.profile = profile;
-    }
-
-    public Profile getProfile() {
-        return profile;
-    }
-
-    public Role getRole() {
-        return role;
     }
 
     public void setRole(Role role) {

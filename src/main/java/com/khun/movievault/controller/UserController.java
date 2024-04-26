@@ -1,17 +1,18 @@
 package com.khun.movievault.controller;
 
 import com.khun.movievault.dto.user.*;
+import com.khun.movievault.exception.CurrentPasswordNotMatchException;
+import com.khun.movievault.exception.NotFoundException;
 import com.khun.movievault.exception.UserAlreadyExistException;
 import com.khun.movievault.exception.UserInvalidCredentialException;
-import com.khun.movievault.exception.NotFoundException;
 import com.khun.movievault.jwtconfig.JWTMgmtUtilityService;
 import com.khun.movievault.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -42,8 +43,8 @@ public class UserController {
             var jwtToken = jwtMgmtUtilityService.generateToken(email);
             var user = userService.getUserByEmail(email);
             if (user != null) {
-                userAuthResponse = new UserAuthResponse(user.getUserId(), user.getEmail(), jwtToken);
-            }else {
+                userAuthResponse = new UserAuthResponse(user.getProfile().getProfileId(), user.getEmail(), jwtToken);
+            } else {
                 throw new UserInvalidCredentialException("Invalid Credential");
             }
         } catch (Exception ex) {
@@ -51,5 +52,26 @@ public class UserController {
             throw new UserInvalidCredentialException(ex.getMessage());
         }
         return ResponseEntity.ok(userAuthResponse);
+    }
+
+    @PatchMapping("/changePassword")
+    public ResponseEntity<UpdatePasswordResponse> updatePassword(@RequestBody UpdatePasswordRequest updatePasswordRequest) throws CurrentPasswordNotMatchException, NotFoundException {
+        UpdatePasswordResponse updatePasswordResponse = null;
+        try {
+            authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(updatePasswordRequest.email(),
+                            updatePasswordRequest.currentPassword())
+            );
+            var user = userService.getUserByEmail(updatePasswordRequest.email());
+            if (user != null) {
+                updatePasswordResponse = userService.updatePassword(user.getUserId(), updatePasswordRequest.newPassword());
+            } else {
+                throw new UserInvalidCredentialException("Invalid Credential");
+            }
+        } catch (Exception ex) {
+            throw new CurrentPasswordNotMatchException("Invalid Current Password");
+        }
+
+        return ResponseEntity.ok(updatePasswordResponse);
     }
 }

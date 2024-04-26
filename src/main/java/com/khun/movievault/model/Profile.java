@@ -6,6 +6,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -22,5 +24,13 @@ public class Profile {
 
     @OneToOne(mappedBy = "profile")
     private User user;
+
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "favourite_movies",
+            joinColumns = {@JoinColumn(name = "profile_id", referencedColumnName = "profileId")},
+            inverseJoinColumns = {@JoinColumn(name = "movie_id", referencedColumnName = "movieId")}
+    )
+    private List<Movie> favouriteMovies;
 
 }

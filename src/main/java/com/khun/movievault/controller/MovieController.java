@@ -1,6 +1,8 @@
 package com.khun.movievault.controller;
 
-import com.khun.movievault.model.Movie;
+import com.khun.movievault.dto.movie.MovieRequest;
+import com.khun.movievault.dto.movie.MovieResponse;
+import com.khun.movievault.exception.NotFoundException;
 import com.khun.movievault.service.MovieService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,21 +18,22 @@ public class MovieController {
     private MovieService movieService;
 
     @PostMapping("/add")
-    public Movie saveMovie(@RequestBody Movie movie) {
-        return movieService.saveMovie(movie);
+    public ResponseEntity<MovieResponse> saveMovie(@RequestBody MovieRequest movieRequest) {
+        return new ResponseEntity<>(movieService.saveMovie(movieRequest), HttpStatus.CREATED);
     }
 
     @GetMapping("/{id}")
-    public Movie getMovie(@PathVariable("id") Long movieId){
-        return movieService.getMovieById(movieId);
+    public ResponseEntity<MovieResponse> getMovie(@PathVariable("id") Long movieId) throws NotFoundException {
+        return ResponseEntity.ok(movieService.getMovieById(movieId));
     }
+
     @PostMapping("/addAll")
-    public String saveAllMovies(@RequestBody List<Movie> movies){
-        return movieService.saveAllMovies(movies);
+    public ResponseEntity<List<MovieResponse>> saveAllMovies(@RequestBody List<MovieRequest> movieRequests) {
+        return new ResponseEntity<>(movieService.saveAllMovies(movieRequests), HttpStatus.CREATED);
     }
 
     @GetMapping("/list")
-    public ResponseEntity<List<Movie>> listMovies(){
+    public ResponseEntity<List<MovieResponse>> listMovies() {
         return new ResponseEntity<>(movieService.getAllMovies(), HttpStatus.OK);
     }
 

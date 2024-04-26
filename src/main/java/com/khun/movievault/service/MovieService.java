@@ -1,5 +1,8 @@
 package com.khun.movievault.service;
 
+import com.khun.movievault.dto.movie.MovieRequest;
+import com.khun.movievault.dto.movie.MovieResponse;
+import com.khun.movievault.exception.NotFoundException;
 import com.khun.movievault.model.Movie;
 import org.springframework.stereotype.Service;
 
@@ -7,12 +10,12 @@ import java.util.List;
 
 @Service
 public interface MovieService {
-    Movie saveMovie(Movie movie);
+    MovieResponse saveMovie(MovieRequest movieRequest);
 
-    String saveAllMovies(List<Movie> movies);
+    List<MovieResponse> saveAllMovies(List<MovieRequest> movieRequests);
 
-    List<Movie> getAllMovies();
+    List<MovieResponse> getAllMovies();
 
-    Movie getMovieById(Long movieId);
+    MovieResponse getMovieById(Long movieId) throws NotFoundException;
 
 }

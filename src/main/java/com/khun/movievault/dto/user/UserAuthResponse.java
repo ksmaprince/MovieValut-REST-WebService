@@ -1,7 +1,7 @@
 package com.khun.movievault.dto.user;
 
 public record UserAuthResponse(
-        Long userId,
+        Long profileId,
         String email,
         String jwtToken
 ) {

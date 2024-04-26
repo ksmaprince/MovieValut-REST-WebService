@@ -1,8 +1,6 @@
 package com.khun.movievault.advice;
 
-import com.khun.movievault.exception.UserInvalidCredentialException;
-import com.khun.movievault.exception.UserAlreadyExistException;
-import com.khun.movievault.exception.NotFoundException;
+import com.khun.movievault.exception.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -17,7 +15,7 @@ public class MovieVaultExceptionHandler {
     @ExceptionHandler(UserAlreadyExistException.class)
     public Map<String, String> handleUserDuplicateErrors(UserAlreadyExistException userAlreadyExistException){
         var errorMap = new HashMap<String, String>();
-        errorMap.put("Error Message", userAlreadyExistException.getMessage());
+        errorMap.put("ErrorMessage", userAlreadyExistException.getMessage());
         return errorMap;
     }
 
@@ -25,7 +23,7 @@ public class MovieVaultExceptionHandler {
     @ExceptionHandler(NotFoundException.class)
     public Map<String, String> handleUserNotFoundError(NotFoundException notFoundException){
         var errorMap = new HashMap<String, String>();
-        errorMap.put("Error Message", notFoundException.getMessage());
+        errorMap.put("ErrorMessage", notFoundException.getMessage());
         return errorMap;
     }
 
@@ -33,7 +31,23 @@ public class MovieVaultExceptionHandler {
     @ExceptionHandler(UserInvalidCredentialException.class)
     public Map<String, String> handleInvalidUserError(UserInvalidCredentialException invalidUserCredentialException){
         var errorMap = new HashMap<String, String>();
-        errorMap.put("Error Message", invalidUserCredentialException.getMessage());
+        errorMap.put("ErrorMessage", invalidUserCredentialException.getMessage());
+        return errorMap;
+    }
+
+    @ResponseStatus(HttpStatus.CONFLICT)
+    @ExceptionHandler(FavouriteMovieAlreadyExistException.class)
+    public Map<String, String> handleFavouriteMovieAlreadyExistError(FavouriteMovieAlreadyExistException favouriteMovieAlreadyExistException){
+        var errorMap = new HashMap<String, String>();
+        errorMap.put("ErrorMessage", favouriteMovieAlreadyExistException.getMessage());
+        return errorMap;
+    }
+
+    @ResponseStatus(HttpStatus.CONFLICT)
+    @ExceptionHandler(CurrentPasswordNotMatchException.class)
+    public Map<String, String> handleCurrentPasswordNotMatchError(CurrentPasswordNotMatchException currentPasswordNotMatchException){
+        var errorMap = new HashMap<String, String>();
+        errorMap.put("ErrorMessage", currentPasswordNotMatchException.getMessage());
         return errorMap;
     }
 }
