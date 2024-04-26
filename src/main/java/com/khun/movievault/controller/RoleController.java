@@ -1,5 +1,6 @@
 package com.khun.movievault.controller;
 
+import com.khun.movievault.dto.role.RoleRequest;
 import com.khun.movievault.dto.role.RoleResponse;
 import com.khun.movievault.model.Role;
 import com.khun.movievault.service.RoleService;
@@ -15,9 +16,10 @@ import java.util.List;
 public class RoleController {
     @Autowired
     private RoleService roleService;
+
     @PostMapping("/addRole")
-    public ResponseEntity<Role> saveRoll(@RequestBody Role role){
-        return ResponseEntity.ok(roleService.saveRole(role));
+    public ResponseEntity<RoleResponse> saveRoll(@RequestBody RoleRequest roleRequest){
+        return ResponseEntity.ok(roleService.saveRole(roleRequest));
     }
 
     @GetMapping("/roles")
