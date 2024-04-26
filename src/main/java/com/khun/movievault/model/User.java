@@ -2,26 +2,23 @@ package com.khun.movievault.model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 
+@Data
 @AllArgsConstructor
 @Entity
 public class User implements UserDetails {
-    @Getter
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long userId;
-    @Getter
     @Column(unique = true, nullable = false)
     @Email
     private String email;
-    @Getter
     @Column(nullable = false)
     private String password;
 
@@ -30,25 +27,14 @@ public class User implements UserDetails {
     private boolean credentialsNonExpired;
     private boolean enabled;
 
-    @Getter
     @ManyToOne
     @JoinColumn(name = "role_id", unique = false, nullable = false)
     Role role;
 
-    @Getter
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "profile_id", unique = true, nullable = false)
     private Profile profile;
 
-
-//    @Getter
-//    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-//    @JoinTable(
-//            name = "user_role",
-//            joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "userId")},
-//            inverseJoinColumns = {@JoinColumn(name = "role_id", referencedColumnName = "roleId")}
-//    )
-//    private List<Role> roles;
 
     public User(Long userId, String email, String password, boolean accountNonExpired, boolean accountNonLocked, boolean credentialsNonExpired, boolean enabled, Profile profile) {
         this.userId = userId;
