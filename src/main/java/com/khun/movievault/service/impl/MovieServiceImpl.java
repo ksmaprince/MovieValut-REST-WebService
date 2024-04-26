@@ -18,7 +18,6 @@ public class MovieServiceImpl implements MovieService {
     @Autowired
     private MovieRepository movieRepository;
 
-
     @Override
     public MovieResponse saveMovie(MovieRequest movieRequest) {
         val movie = new Movie();

@@ -35,7 +35,8 @@ public class AppMovieVaultWebAPISecurityConfig {
                                     .requestMatchers("/movievault/v1/hello").permitAll()
                                     .requestMatchers("/movievault/v1/api/auth/**").permitAll()
                                     .requestMatchers("/movievault/v1/api/movie/**").authenticated()
-                                    .requestMatchers("/movievault/v1/api/profile/**").authenticated();
+                                    .requestMatchers("/movievault/v1/api/profile/**").authenticated()
+                                    .requestMatchers("/movievault/v1/api/file/**").authenticated();
 //                                    .requestMatchers("/adsweb/api/v1/get/**").authenticated();
                         }
                 )

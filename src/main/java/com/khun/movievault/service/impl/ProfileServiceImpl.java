@@ -5,6 +5,7 @@ import com.khun.movievault.dto.profile.ProfileRequest;
 import com.khun.movievault.dto.profile.ProfileResponse;
 import com.khun.movievault.exception.FavouriteMovieAlreadyExistException;
 import com.khun.movievault.exception.NotFoundException;
+import com.khun.movievault.model.Profile;
 import com.khun.movievault.repository.MovieRepository;
 import com.khun.movievault.repository.ProfileRepository;
 import com.khun.movievault.service.ProfileService;
@@ -23,18 +24,23 @@ public class ProfileServiceImpl implements ProfileService {
     MovieRepository movieRepository;
 
     @Override
-    public ProfileResponse getProfileById(Long profileId) throws NotFoundException{
-         val profile = profileRepository.findById(profileId).orElseThrow(() -> new NotFoundException(String.format("Profile with ID: %s Not Found", profileId)));
-         return new ProfileResponse(
-                 profile.getProfileId(),
-                 profile.getFullName(),
-                 profile.getContactNo(),
-                 profile.getImageUrl()
-         );
+    public Profile getProfile(Long profileId) throws NotFoundException {
+        return profileRepository.findById(profileId).orElseThrow(() -> new NotFoundException(String.format("Profile with ID: %s Not Found", profileId)));
     }
 
     @Override
-    public ProfileResponse updateProfile(ProfileRequest profileRequest, Long profileId) throws NotFoundException{
+    public ProfileResponse getProfileById(Long profileId) throws NotFoundException {
+        val profile = profileRepository.findById(profileId).orElseThrow(() -> new NotFoundException(String.format("Profile with ID: %s Not Found", profileId)));
+        return new ProfileResponse(
+                profile.getProfileId(),
+                profile.getFullName(),
+                profile.getContactNo(),
+                profile.getImageUrl()
+        );
+    }
+
+    @Override
+    public ProfileResponse updateProfile(ProfileRequest profileRequest, Long profileId) throws NotFoundException {
         val profile = profileRepository.findById(profileId).orElseThrow(() -> new NotFoundException(String.format("Profile with ID: %s Not Found", profileId)));
         profile.setFullName(profileRequest.fullName());
         profile.setContactNo(profileRequest.contactNo());
@@ -51,7 +57,7 @@ public class ProfileServiceImpl implements ProfileService {
     @Override
     public Long saveFavoriteMovie(Long profileId, Long movieId) throws NotFoundException, FavouriteMovieAlreadyExistException {
         val profile = profileRepository.findById(profileId).orElseThrow(() -> new NotFoundException(String.format("Profile with ID: %s Not Found", profileId)));
-        val movie = movieRepository.findById(movieId).orElseThrow(()-> new NotFoundException(String.format("Movie with ID: %s Not Found", movieId)));
+        val movie = movieRepository.findById(movieId).orElseThrow(() -> new NotFoundException(String.format("Movie with ID: %s Not Found", movieId)));
         val movies = profile.getFavouriteMovies();
 
         if (movies.contains(movie)) {
@@ -76,5 +82,33 @@ public class ProfileServiceImpl implements ProfileService {
                 movie.getRating(),
                 movie.getTrailer()
         )).toList();
+    }
+
+    @Override
+    public List<MovieResponse> deleteFavoriteMovieByProfileId(Long movieId, Long profileId) throws NotFoundException {
+        profileRepository.deleteFavouriteMovieByProfileId(movieId, profileId);
+        val profile = profileRepository.findById(profileId).orElseThrow(() -> new NotFoundException(String.format("Profile with ID: %s Not Found", profileId)));
+
+        return profile.getFavouriteMovies().stream().map(movie -> new MovieResponse(
+                movie.getMovieId(),
+                movie.getMovieTitle(),
+                movie.getOverview(),
+                movie.getReleaseDate(),
+                movie.getPoster(),
+                movie.getRating(),
+                movie.getTrailer()
+        )).toList();
+    }
+
+    @Override
+    public ProfileResponse updateProfileImage(Profile profile) {
+
+        val updatedProfile = profileRepository.save(profile);
+        return new ProfileResponse(
+                updatedProfile.getProfileId(),
+                updatedProfile.getFullName(),
+                updatedProfile.getContactNo(),
+                updatedProfile.getImageUrl()
+        );
     }
 }
