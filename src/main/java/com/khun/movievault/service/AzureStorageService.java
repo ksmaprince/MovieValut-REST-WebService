@@ -19,7 +19,7 @@ public class AzureStorageService {
 
     public AzureStorageService() {
         blobServiceClient = new BlobServiceClientBuilder()
-                .connectionString("DefaultEndpointsProtocol=https;AccountName=khunstorage;AccountKey=fPzP4MFGI4jPlMzQ6wxAZljh8k3k0wdlCW/44vCSlFRK40mJtj9SupYYA4wh+8IjDJGSNVsVuh2++AStni75jw==;EndpointSuffix=core.windows.net")
+                .connectionString("Add ... Azure Connection String ")
                 .buildClient();
     }
 
