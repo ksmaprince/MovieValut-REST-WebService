@@ -1,9 +1,51 @@
-# **Project Title: MovieVault: Movie Collection System**
+# **Movie-Vault (Movie Collection System)**
 
-In the realm of entertainment, the accessibility and management of movie collections have become increasingly integral to user experience. However, existing systems often lack seamless integration and intuitive interfaces, hindering users from efficiently exploring and enjoying their favorite movies. To address this challenge, the proposed project aims to develop a comprehensive movie collection system, that combine the power of Spring Boot as a backend and Android as a frontend.
+**Project Title:** Movie-Vault (Movie Collection System)
 
-### MovieVault-WebServices
-The primary objective of this project is to create a robust **RESTful API web application** capable of efficiently storing, retrieving, and processing both movie and user information. Leveraging **Spring Boot** for backend development, **Spring Security** for user authentication, and **Spring Data JPA** for data persistence, the system will ensure security, scalability, and reliability in handling diverse user interactions. Furthermore, the project will implement **MySQL** as the backend database, providing a structured foundation for seamless data management. The use of **MySQL** facilitates efficient data organization and retrieval, ensuring optimal performance even with growing user databases.
+**Objective:** Design and develop a cutting-edge movie collection management system, harnessing the power of Azure Cloud Platform and Android technology to provide a seamless and intuitive user experience.
+
+**Problem Statement:** Existing movie collection systems often suffer from:
+* Disparate data storage and retrieval
+* Clumsy user interfaces
+* Limited scalability and security
+* Inefficient data organization and retrieval
+
+**Solution:** Create a comprehensive system that addresses these challenges by integrating:
+
+Backend:
+* Azure Cloud Platform for deployment
+* Azure Blob storage for file storage
+* Spring Boot for backend development
+* Spring Security for user authentication
+* Spring Data JPA for data persistence
+* MySQL as the backend database
+
+Frontend:
+* Android mobile application
+* Jetpack Compose for UI
+* Retrofit for API integration
+* Coroutine for asynchronous programming
+* LiveData and MVVM for data management and architecture
+* Kotlin programming language
+
+**Goals:**
+* Develop a robust and scalable movie collection system
+* Ensure seamless integration and user-friendly interface
+* Leverage Azure Cloud Platform and Azure Blob storage for efficient storage and retrieval
+* Utilize Jetpack Compose and other frontend technologies for an intuitive and engaging user experience
+* Prioritize security, scalability, and reliability in handling diverse user interactions
+
+**Key Features:**
+* User registration and login functionality
+* Movie collection management and organization
+* Movie trailer playback and favorites saving
+* Intuitive search and filtering capabilities
+* Personalized user recommendations
+* Secure user data management and authentication
+
+**Deliverables:**
+* A fully functional movie collection management system
+* A presentation showcasing the system's features and functionality
 
 
 # **Class Diagram**
@@ -83,3 +125,10 @@ It'll not work in your side, you need to set up with the Azure Account and modif
 
 ![img.png](screen/upload_profile_image.png)
 
+
+
+## FRONT-END (MOBILE PROJECT)
+
+MovieVault front-end application is developed by using Native Android using Kotlin language, MVVM architecture, **Jetpack Compose** for UI, Retrofit, Coroutine, Dagger-Hilt.
+
+Project Sample can be seen on the Github [here](https://github.com/ksmaprince/MovieValut).
