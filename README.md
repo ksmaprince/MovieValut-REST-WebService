@@ -74,50 +74,73 @@ Frontend:
 3. Before running the project, prioritize adding the desired Roles by using "Add Role" api to your project.
 
 
+<br/>
 
 ### **Add Role**
 
 ![img.png](add_role.png)
+
+
+<br/>
 
 ### **Get All Roles**
 
 ![img.png](screen/get_all_role.png)
 
 
+<br/>
+
 ### **Create New User**
 
 ![create_new_user.png](screen/create_new_user.png)
 
+<br/>
 
 ### **User Login**
 
 ![img.png](screen/user_login.png)
 
+<br/>
 
 ### **Add All Movies (Admin)**
 
 ![img.png](screen/add_all_movies.png)
+
+<br/>
 
 ### **Get All Movies**
 
 ![img.png](screen/get_all_movies.png)
 
 
+<br/>
+
 ### **Get Profile By Id**
 
 ![img.png](screen/get_profile_by_id.png)
+
+<br/>
 
 ### **Update Profile By Id**
 
 ![img.png](screen/update_profile.png)
 
+
+<br/>
+
 ### **Add Favourite Movie**
 
 ![img.png](screen/add_favourite_movie.png)
 
+
+<br/>
+
 ### **Get All Favourite Movies**
 
 ![img.png](screen/get_all_favourite_movie.png)
+
+
+<br/>
 
 ### **Upload Profile Image**
 
@@ -126,6 +149,7 @@ It'll not work in your side, you need to set up with the Azure Account and modif
 ![img.png](screen/upload_profile_image.png)
 
 
+<br/>
 
 ## FRONT-END (MOBILE PROJECT)
 
